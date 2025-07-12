@@ -814,6 +814,16 @@ html, body {
 
 
 
+.dev-outline {
+  outline: 0 solid #00eeff;
+  transition: outline-width 0.25s ease;
+}
+
+.dev-outline-active {
+  outline-width: 2px;
+}
+
+
 
 
 

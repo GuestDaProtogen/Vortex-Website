@@ -1,4 +1,9 @@
+let faceActive = false;
+
+
 function updateTime() {
+  if (faceActive) return; // don’t overwrite during :3
+
   const localTimeEl = document.getElementById('local-time');
   const serverTimeEl = document.getElementById('server-time');
 
@@ -15,6 +20,7 @@ function updateTime() {
   const serverTime = new Date(utc + 7 * 3600000);
   serverTimeEl.textContent = serverTime.toLocaleTimeString([], options);
 }
+
 
 setInterval(updateTime, 1000);
 updateTime(); 
@@ -84,6 +90,7 @@ function updateCircle(element, count, maxPlayers) {
 }
 
 async function fetchPlayerCounts() {
+  if (faceActive) return;
     try {
         const proxyUrl = "https://corsproxy.io/?";
         const astroAPI = "https://games.roblox.com/v1/games?universeIds=2176212732";
@@ -242,7 +249,6 @@ window.addEventListener("load", () => {
 (() => {
   let keyBuffer = "";
   let devOutlineActive = false;
-  let faceActive = false;
   let originalTexts = [];
 
   window.addEventListener("keydown", (e) => {
@@ -264,55 +270,108 @@ window.addEventListener("load", () => {
     }
   });
 
-  // Toggle :3 text effect - instant swap, no animation
+  function randomChar() {
+    const chars = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+    return chars[Math.floor(Math.random() * chars.length)];
+  }
+
+  function animateToCute(node, target) {
+    // step 1: delete old text letter by letter
+    let text = node.textContent;
+    const deleteInterval = setInterval(() => {
+      if (text.length > 0) {
+        text = text.slice(0, -1);
+        node.textContent = text;
+      } else {
+        clearInterval(deleteInterval);
+        // step 2: scramble then resolve into target
+        let frame = 0;
+        const maxFrames = 20;
+        const scrambleInterval = setInterval(() => {
+          if (frame < maxFrames) {
+            node.textContent = Array.from(target).map(() => randomChar()).join("");
+            frame++;
+          } else {
+            node.textContent = target;
+            clearInterval(scrambleInterval);
+          }
+        }, 50);
+      }
+    }, 30);
+  }
+
+function animateDelete(node, original) {
+  let text = node.textContent;
+  const deleteInterval = setInterval(() => {
+    if (text.length > 0) {
+      text = text.slice(0, -1);
+      node.textContent = text;
+    } else {
+      clearInterval(deleteInterval);
+
+      let i = 0;
+      const restoreInterval = setInterval(() => {
+        i++;
+        if (i <= original.length) {
+          node.textContent = original.slice(0, i);
+        } else {
+          node.textContent = original; // make sure it’s fully restored
+          clearInterval(restoreInterval);
+        }
+      }, 30);
+    }
+  }, 30);
+}
+
+
   function toggleFace() {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    let node;
+
     if (!faceActive) {
       originalTexts = [];
-      // Save original text nodes
-      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-      let node;
       while ((node = walker.nextNode())) {
         if (node.textContent.trim()) {
           originalTexts.push({ node, text: node.textContent });
-          node.textContent = ":3";
+          animateToCute(node, ":3");
         }
       }
       faceActive = true;
     } else {
-      // Restore original text instantly
       originalTexts.forEach(({ node, text }) => {
-        node.textContent = text;
+        animateDelete(node, text);
       });
       faceActive = false;
     }
   }
 
-  // Toggle dev outline effect with smooth animation
   function toggleDevOutline() {
-    const allElements = document.querySelectorAll("*");
+    const allElements = document.querySelectorAll(
+      "body *:not(.page):not(.carousel .card):not(#splash-screen):not(.left-bar):not(.right-bar)"
+    );
 
     if (!devOutlineActive) {
       devOutlineActive = true;
-
       allElements.forEach((el, i) => {
-        el.style.outline = "0 solid #00eeffff";
-        el.style.transition = "outline-width 0.25s ease";
+        el.classList.add("dev-outline");
         setTimeout(() => {
-          el.style.outlineWidth = "2px";
+          el.classList.add("dev-outline-active");
         }, i * 20);
       });
     } else {
       devOutlineActive = false;
-
       allElements.forEach((el, i) => {
-        el.style.transition = "outline-width 0.25s ease";
         setTimeout(() => {
-          el.style.outlineWidth = "0";
+          el.classList.remove("dev-outline-active");
         }, i * 20);
       });
     }
   }
 })();
+
+
+
+
 
 
 
