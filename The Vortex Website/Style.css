@@ -1,0 +1,893 @@
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('./asset/fontface/Ubuntu/Ubuntu-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Iceland';
+  src: url('./asset/fontface/Iceland/Iceland-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BigShoulders';
+  src: url('./asset/fontface/Big_Shoulders/BigShoulders-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BigShouldersLight';
+  src: url('./asset/fontface/Big_Shoulders/BigShoulders-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AudioWide';
+  src: url('./asset/fontface/Audiowide/Audiowide-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.primary {
+  color: #00A8F3;
+}
+
+.f-u {
+  font-family: Ubuntu;
+}
+
+.f-il {
+  font-family: Iceland;
+}
+
+.f-aw {
+  font-family: AudioWide;
+}
+
+.f-bs {
+  font-family: BigShoulders;
+}
+
+.f-bsl {
+  font-family: BigShouldersLight;
+}
+
+.btn-primary {
+  background-color: #005eff;
+  border: 0px;
+  font-size: 110%;
+  width: 100%;
+  color: #fff;
+  font-family: BigShoulders;
+  letter-spacing: 3px;
+
+  padding: 13px 10px;         
+  display: inline-flex;       
+  align-items: center;        
+  gap: 8px;                  
+  cursor: pointer;           
+}
+
+.btn-secondary {
+  background-color: #005eff00;
+  border: 0px;
+  font-size: 110%;
+  width: 100%;
+  color: #fff;
+  font-family: BigShoulders;
+  letter-spacing: 3px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: #005eff;
+  padding: 13px 10px;         
+  display: inline-flex;       
+  align-items: center;        
+  gap: 8px;                  
+  cursor: pointer;           
+}
+
+.btn-text {
+  margin-right: auto;
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; 
+  font-family: Arial, sans-serif;
+  background: radial-gradient(
+    circle at top right,
+    #012847 0%,
+    #000d19 25%,
+    #000000 50%
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Topbar */
+.topbar {
+  background-color: transparent;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+}
+
+.topbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.topbar .nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.topbar .nav-links a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.topbar .nav-links a:hover {
+  color: #00ffe4;
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.left-bar {
+  background-color: transparent;
+  color: #fff;
+  width: 200px;
+  padding: 10px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: flex;          /* <-- add this */
+  flex-direction: column;
+  height: 100%;           /* keep this */
+  
+}
+
+.left-bar span.f-il {
+  display: block;       /* so margin applies vertically */
+  margin-bottom: 0.3rem;
+}
+
+.left-bar span.f-bsl.primary {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+
+.content {
+  background-color: transparent;
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  position: relative;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.right-bar {
+  background-color: transparent;
+  color: #fff;
+  width: 200px;
+  padding: 10px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* space between buttons */
+}
+
+.right-bar button.nav-btn {
+  font-size: 1rem;      /* normalize font size */
+  padding: 18px 12px;    /* comfy padding */
+  flex: none;           /* no stretching */
+  width: 100%;          /* full width of right-bar */
+  max-width: 100%;      /* keep inside container */
+  border-radius: 4px;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: #fff;
+  margin: 0%;
+}
+
+.right-bar button.nav-btn i {
+  font-size: 1.2rem;    /* icon size */
+}
+
+
+.right-bar button.nav-btn {
+  margin: 0; /* spacing between buttons */
+  flex-shrink: 0;      /* buttons keep natural height */
+  flex: none;
+}
+
+.right-bar .bottom-text {
+  margin-top: auto;    /* pushes this to the bottom */
+  text-align: right;
+  font-size: 1rem;
+  padding-bottom: 12px;
+  padding-top: 1rem;
+  font-family: 'Iceland', sans-serif; /* f-il font family */
+  color: #ffffff; /* maybe a softer color */
+  user-select: none;
+}
+
+
+.time-display {
+  font-family: Iceland;
+  font-size: 1.1rem;
+}
+
+.time-display .label {
+  color: grey;
+}
+
+.time-display .value {
+  color: white;
+}
+
+.corner-box {
+  position: relative;
+  width: 100%;
+  background: #000000;
+  margin: 2rem auto;
+  margin-top: 0% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.149);
+  box-sizing: border-box;
+}
+
+.inner-box {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  background: #000000;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+.inner-box img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+/* Corner Lines */
+.corner {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+}
+
+.corner::before,
+.corner::after {
+  content: '';
+  position: absolute;
+  background: rgb(0, 162, 255);
+}
+
+.corner::before {
+  width: 15px;
+  height: 5px;
+}
+
+.corner::after {
+  width: 5px;
+  height: 15px;
+}
+
+/* Position each corner — with negative offsets for the cyber aesthetic */
+.top-left {
+  top: -5px;
+  left: -5px;
+}
+
+.top-left::before {
+  top: 0;
+  left: 0;
+}
+
+.top-left::after {
+  top: 0;
+  left: 0;
+}
+
+.top-right {
+  top: -5px;
+  right: -5px;
+}
+
+.top-right::before {
+  top: 0;
+  right: 0;
+}
+
+.top-right::after {
+  top: 0;
+  right: 0;
+}
+
+.bottom-left {
+  bottom: -5px;
+  left: -5px;
+}
+
+.bottom-left::before {
+  bottom: 0;
+  left: 0;
+}
+
+.bottom-left::after {
+  bottom: 0;
+  left: 0;
+}
+
+.bottom-right {
+  bottom: -5px;
+  right: -5px;
+}
+
+.bottom-right::before {
+  bottom: 0;
+  right: 0;
+}
+
+.bottom-right::after {
+  bottom: 0;
+  right: 0;
+}
+
+.bottom-bar {
+    position: fixed;
+    bottom: 20px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    background: #222;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-family: BigShoulders;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+
+
+.nav-btn {
+    font-size: 110%;
+    width: 100%;
+    letter-spacing: 3px;
+
+    padding: 13px 40px 13px 10px; /* room for slash */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-top: 5px;
+
+
+    flex: 1;
+    background-color: rgba(128, 128, 128, 0);
+    border: none;
+    color: #fff;
+    font-family: BigShoulders;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    position: relative;
+    overflow: visible;
+}
+
+/* Diagonal slash background shape on the right */
+.nav-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -20px;
+    width: 30px;
+    height: 100%;
+    background-color: rgb(0, 183, 255); /* same as button bg */
+    clip-path: polygon(30% 0%, 100% 0%, 70% 100%, 0% 100%);
+    pointer-events: none;
+    
+    /* hide by default */
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: background-color 0.2s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* The "//" text that scales in on active */
+.nav-btn span.slash-effect {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%) scaleX(0);
+    color: #00a8f3;
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Active button styles */
+.nav-btn.active {
+    background-color: #005eff;
+}
+
+.nav-btn:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+.nav-btn.active::after {
+    background-color: #0099ff;
+    box-shadow: 0 0 8px #00a8f3;
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+.nav-btn.active span.slash-effect {
+    transform: translateY(-50%) scaleX(1);
+    opacity: 1;
+}
+
+
+.bottom-text {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: #ffffff;
+    text-align: center;
+    padding-top: 1rem;
+}
+
+.page {
+  position: absolute;
+  left: 10px;
+  width: 98%;
+  height: 96%;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  transform: translateX(100%);
+  pointer-events: none;
+}
+
+.page.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.page.slide-out-left {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.page.slide-out-right {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.page.slide-in-left {
+  transform: translateX(-100%);
+  opacity: 1;
+}
+
+.page.slide-in-right {
+  transform: translateX(100%);
+  opacity: 1;
+}
+
+.page-gradient {
+  background: linear-gradient(
+    to right,
+    #000000 0%,
+    #012847 50%,
+    #000000 100%
+  );
+}
+
+
+
+#crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* don’t block any clicks */
+  z-index: 9999;
+
+  /* Scanlines */
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.295) 0px,    /* slightly darker stripe */
+    rgba(0, 0, 0, 0) 2px       /* fully transparent gap */
+  );
+
+
+  opacity: 0.8; 
+  mix-blend-mode: overlay;
+
+  animation: crt-scanlines 1s linear infinite;
+}
+
+@keyframes crt-scanlines {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 4px;
+  }
+}
+
+
+.social-btn {
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.social-btn:hover .btn-text,
+.social-btn:hover i {
+    color: #000;
+}
+
+
+.img-icon {
+  filter: brightness(0) saturate(100%) invert(74%) sepia(61%) saturate(6276%) hue-rotate(174deg) brightness(100%) contrast(104%);
+}
+
+.game-name {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-align: center; /* center the name text */
+}
+
+.circle {
+    position: relative;
+    width: 100%;
+    max-width: 150px; /* caps at 150px */
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: conic-gradient(#00b7ff 0%, #000000 0%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle-inner {
+    position: absolute;
+    width: 73%;
+    height: 73%;
+    border-radius: 50%;
+    background: #0b0b0f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(1rem, 3vw, 2rem);
+    color: #00a2ff;
+}
+
+
+
+
+
+.status-circle {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: #00a2ff; 
+  animation: blink 800ms infinite alternate;
+}
+
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
+
+
+
+.carousel {
+  perspective: 1000px;
+  position: relative;
+  max-width: 90vw;
+  height: 60vh;      /* fixed height to control size */
+  margin: 2rem auto 5rem;  /* bottom margin so buttons don't overlap */
+  overflow: visible;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  z-index: 0;
+
+  /* Ensure the card stays vertically centered */
+  transform-origin: center center;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card img {
+  max-height: 60vh;  /* restrict max height to carousel height */
+  width: auto;
+  border-radius: 1rem;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+
+
+.card.center {
+  /* Scale it down a bit */
+  transform: translate(-50%, -50%) rotateY(0deg) scale(1);
+  opacity: 1;
+  z-index: 3;
+}
+
+.card.left {
+  transform: translate(calc(-50% - 300px), -50%) rotateY(-40deg) scale(0.85);
+  opacity: 0.5;
+  z-index: 2;
+  filter: brightness(0.8);
+}
+
+.card.right {
+  transform: translate(calc(-50% + 300px), -50%) rotateY(40deg) scale(0.85);
+  opacity: 0.5;
+  z-index: 2;
+  filter: brightness(0.8);
+}
+
+
+#page-gallery > .corner-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+
+#page-gallery .carousel {
+  max-height: 70vh; /* Reduce max height to keep cards smaller */
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible; /* Let cards overflow if needed but keep them visible */
+}
+
+#page-gallery .corner-box:last-child {
+  flex-shrink: 0;
+  margin-top: 1rem;
+}
+
+
+.corner-box.buttons-container {
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  padding: 0 1rem;
+  width: 80%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: auto;
+  z-index: 10;
+  margin-bottom: 5px;
+}
+
+
+
+/* Initial hidden state */
+.page-animate {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.6s ease;
+}
+
+.page-animate.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Slide-in for left/right elements */
+.slide-left {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: all 0.6s ease;
+}
+
+.slide-left.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slide-right {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.6s ease;
+}
+
+.slide-right.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+
+#splash-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 1.2s ease;
+}
+
+#splash-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.splash-text {
+  font-family: monospace;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+
+
+
+
+
+
+#layout-inspector-overlay {
+  position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none; /* Pass clicks through */
+  z-index: 99999;
+  font-family: monospace;
+  font-size: 10px;
+  color: #00a2ff;
+  user-select: none;
+}
+
+.layout-inspector-box {
+  position: absolute;
+  border: 2px solid rgba(0, 162, 255, 0.7);
+  border-radius: 4px;
+  box-sizing: content-box;
+  background: transparent;
+  transition: border-color 0.3s ease;
+  pointer-events: none; /* important: do not block clicks */
+  opacity: 0.7;
+}
+
+.layout-inspector-label {
+  position: absolute;
+  background: rgba(0, 162, 255, 0.8);
+  color: #fff;
+  padding: 2px 4px;
+  border-radius: 2px;
+  pointer-events: none;
+  white-space: nowrap;
+  top: -18px;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Padding and margin overlays */
+.layout-inspector-padding {
+  position: absolute;
+  border: 2px solid rgba(0, 255, 0, 0.7);
+  background: rgba(0, 255, 0, 0.1);
+  pointer-events: none;
+  border-radius: 4px;
+  box-sizing: content-box;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.layout-inspector-margin {
+  position: absolute;
+  border: 2px solid rgba(255, 165, 0, 0.7);
+  background: rgba(255, 165, 0, 0.1);
+  pointer-events: none;
+  border-radius: 4px;
+  box-sizing: content-box;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+/* Show overlays when highlighted */
+.layout-inspector-box.highlighted {
+  border-color: #00ffff;
+  opacity: 1;
+}
+
+.layout-inspector-box.highlighted .layout-inspector-padding,
+.layout-inspector-box.highlighted .layout-inspector-margin {
+  opacity: 1;
+}
+
+
