@@ -1,8 +1,9 @@
-let faceActive = false;
+  let faceActive = false;
+  let rjavaActive = false;
 
 
 function updateTime() {
-  if (faceActive) return; // don’t overwrite during :3
+  if (faceActive || rjavaActive) return;
 
   const localTimeEl = document.getElementById('local-time');
   const serverTimeEl = document.getElementById('server-time');
@@ -29,52 +30,72 @@ updateTime();
 const buttons = document.querySelectorAll('.nav-btn');
 const pages = document.querySelectorAll('.page');
 let currentPage = document.querySelector('.page.active');
-
 let isAnimating = false;
 
+function changePage(targetId) {
+  if (isAnimating) return;
+
+  const targetPage = document.getElementById(`page-${targetId}`);
+  if (!targetPage || targetPage === currentPage) return;
+
+  isAnimating = true;
+
+  // Highlight nav button
+  buttons.forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-page') === targetId);
+  });
+
+  const currentIndex = Array.from(pages).indexOf(currentPage);
+  const targetIndex = Array.from(pages).indexOf(targetPage);
+  const direction = targetIndex > currentIndex ? 'left' : 'right';
+
+  // Animate out current
+  currentPage.classList.remove('active');
+  currentPage.classList.add(direction === 'left' ? 'exit-left' : 'exit-right');
+
+  // Prepare target
+  targetPage.classList.remove('exit-left', 'exit-right', 'enter-from-left', 'enter-from-right');
+  targetPage.classList.add(direction === 'left' ? 'enter-from-right' : 'enter-from-left');
+  void targetPage.offsetWidth; // force reflow
+
+  // Animate in target
+  targetPage.classList.remove('enter-from-left', 'enter-from-right');
+  targetPage.classList.add('active');
+
+  setTimeout(() => {
+    currentPage.classList.remove('exit-left', 'exit-right');
+    currentPage = targetPage;
+    isAnimating = false;
+  }, 400);
+}
+
+// Nav button clicks
 document.querySelectorAll('[data-page]').forEach(btn => {
   btn.addEventListener('click', () => {
-    if (isAnimating) return;
-
     const targetId = btn.getAttribute('data-page');
-    const targetPage = document.getElementById(`page-${targetId}`);
-
-    if (targetPage === currentPage) return;
-
-    isAnimating = true;
-
-    // Highlight only the right-side nav button
-    buttons.forEach(b => {
-      b.classList.toggle('active', b.getAttribute('data-page') === targetId);
-    });
-
-    const currentIndex = Array.from(pages).indexOf(currentPage);
-    const targetIndex = Array.from(pages).indexOf(targetPage);
-    const direction = targetIndex > currentIndex ? 'left' : 'right';
-
-    // Animate out current page
-    currentPage.classList.remove('active');
-    currentPage.classList.add(direction === 'left' ? 'exit-left' : 'exit-right');
-
-    // Prepare target page
-    targetPage.classList.remove('exit-left', 'exit-right', 'enter-from-left', 'enter-from-right');
-    targetPage.classList.add(direction === 'left' ? 'enter-from-right' : 'enter-from-left');
-
-    // Force reflow so browser notices the change
-    void targetPage.offsetWidth;
-
-    // Animate in target page
-    targetPage.classList.remove('enter-from-left', 'enter-from-right');
-    targetPage.classList.add('active');
-
-    setTimeout(() => {
-      currentPage.classList.remove('exit-left', 'exit-right');
-      currentPage = targetPage;
-
-      isAnimating = false;
-    }, 400);
+    changePage(targetId);
+    history.pushState("", document.title, window.location.pathname + window.location.search);
   });
 });
+
+// On page load or hash change — open page based on hash but don't update hash when clicking nav
+function handleHash() {
+  const hash = window.location.hash.substring(1); // remove #
+  if (!hash) return;
+
+  const targetId = `page-${hash}`; // add your prefix internally
+  const targetPage = document.getElementById(targetId);
+
+  if (targetPage) {
+    // Strip 'page-' from id for changePage since it expects id without prefix
+    changePage(hash);
+  }
+}
+
+window.addEventListener('load', handleHash);
+window.addEventListener('hashchange', handleHash);
+
+
 
 
 
@@ -90,7 +111,7 @@ function updateCircle(element, count, maxPlayers) {
 }
 
 async function fetchPlayerCounts() {
-  if (faceActive) return;
+  if (faceActive || rjavaActive) return;
     try {
         const proxyUrl = "https://corsproxy.io/?";
         const astroAPI = "https://games.roblox.com/v1/games?universeIds=2176212732";
@@ -129,6 +150,7 @@ setInterval(fetchPlayerCounts, 5000);
 
 
 setInterval(() => {
+  if (faceActive || rjavaActive) return;
   const img = document.getElementById('discordWidget');
   const baseUrl = "https://discord.c99.nl/widget/theme-4/1125013540995076116.png";
   // Add a unique query param to bust the cache
@@ -230,7 +252,7 @@ window.addEventListener("load", () => {
 
       // Wait for animations (~600ms) then play GIF
       setTimeout(() => {
-        document.getElementById("VortexLogoIntro").classList.remove("hidden");
+        // document.getElementById("VortexLogoIntro").classList.remove("hidden");
       }, 700);
 
     }, 1200); // splash fade duration
@@ -249,14 +271,19 @@ window.addEventListener("load", () => {
 (() => {
   let keyBuffer = "";
   let devOutlineActive = false;
+
+
   let originalTexts = [];
+  let originalImages = [];
+
+  const rjavaImage = "https://imagizer.imageshack.com/img923/8690/lUaz2O.png";
 
   window.addEventListener("keydown", (e) => {
     const key = e.key.toLowerCase();
 
     keyBuffer += key;
-    if (keyBuffer.length > 5) {
-      keyBuffer = keyBuffer.slice(-5);
+    if (keyBuffer.length > 6) {
+      keyBuffer = keyBuffer.slice(-6);
     }
 
     if (keyBuffer.includes(":3")) {
@@ -268,61 +295,12 @@ window.addEventListener("load", () => {
       toggleDevOutline();
       keyBuffer = "";
     }
-  });
 
-  function randomChar() {
-    const chars = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
-    return chars[Math.floor(Math.random() * chars.length)];
-  }
-
-  function animateToCute(node, target) {
-    // step 1: delete old text letter by letter
-    let text = node.textContent;
-    const deleteInterval = setInterval(() => {
-      if (text.length > 0) {
-        text = text.slice(0, -1);
-        node.textContent = text;
-      } else {
-        clearInterval(deleteInterval);
-        // step 2: scramble then resolve into target
-        let frame = 0;
-        const maxFrames = 20;
-        const scrambleInterval = setInterval(() => {
-          if (frame < maxFrames) {
-            node.textContent = Array.from(target).map(() => randomChar()).join("");
-            frame++;
-          } else {
-            node.textContent = target;
-            clearInterval(scrambleInterval);
-          }
-        }, 50);
-      }
-    }, 30);
-  }
-
-function animateDelete(node, original) {
-  let text = node.textContent;
-  const deleteInterval = setInterval(() => {
-    if (text.length > 0) {
-      text = text.slice(0, -1);
-      node.textContent = text;
-    } else {
-      clearInterval(deleteInterval);
-
-      let i = 0;
-      const restoreInterval = setInterval(() => {
-        i++;
-        if (i <= original.length) {
-          node.textContent = original.slice(0, i);
-        } else {
-          node.textContent = original; // make sure it’s fully restored
-          clearInterval(restoreInterval);
-        }
-      }, 30);
+    if (keyBuffer.includes("rjava")) {
+      toggleRjava();
+      keyBuffer = "";
     }
-  }, 30);
-}
-
+  });
 
   function toggleFace() {
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
@@ -345,7 +323,7 @@ function animateDelete(node, original) {
     }
   }
 
-  function toggleDevOutline() {
+function toggleDevOutline() {
     const allElements = document.querySelectorAll(
       "body *:not(.page):not(.carousel .card):not(#splash-screen):not(.left-bar):not(.right-bar)"
     );
@@ -367,7 +345,95 @@ function animateDelete(node, original) {
       });
     }
   }
+
+  function toggleRjava() {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    let node;
+
+    const allImages = document.querySelectorAll("img");
+
+    if (!rjavaActive) {
+      originalTexts = [];
+      originalImages = [];
+
+      while ((node = walker.nextNode())) {
+        if (node.textContent.trim()) {
+          originalTexts.push({ node, text: node.textContent });
+          animateToCute(node, "rjava");
+        }
+      }
+
+      allImages.forEach((img) => {
+        originalImages.push({ img, src: img.src });
+        img.src = rjavaImage;
+      });
+
+      rjavaActive = true;
+    } else {
+      originalTexts.forEach(({ node, text }) => {
+        animateDelete(node, text);
+      });
+
+      originalImages.forEach(({ img, src }) => {
+        img.src = src;
+      });
+
+      rjavaActive = false;
+    }
+  }
+
+  function animateToCute(node, target, duration = 500) {
+    let text = node.textContent;
+    const deleteInterval = setInterval(() => {
+      if (text.length > 0) {
+        text = text.slice(0, -1);
+        node.textContent = text;
+      } else {
+        clearInterval(deleteInterval);
+
+        const scrambleFrames = Math.max(1, Math.floor(duration / 50));
+        let frame = 0;
+
+        const scrambleInterval = setInterval(() => {
+          if (frame < scrambleFrames) {
+            node.textContent = Array.from(target).map(() => randomChar()).join("");
+            frame++;
+          } else {
+            node.textContent = target;
+            clearInterval(scrambleInterval);
+          }
+        }, 50);
+      }
+    }, 30);
+  }
+
+  function animateDelete(node, original) {
+    let text = node.textContent;
+    const deleteInterval = setInterval(() => {
+      if (text.length > 0) {
+        text = text.slice(0, -1);
+        node.textContent = text;
+      } else {
+        clearInterval(deleteInterval);
+
+        let i = 0;
+        const restoreInterval = setInterval(() => {
+          if (i < original.length) {
+            node.textContent += original[i++];
+          } else {
+            clearInterval(restoreInterval);
+          }
+        }, 30);
+      }
+    }, 30);
+  }
+
+  function randomChar() {
+    const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    return chars[Math.floor(Math.random() * chars.length)];
+  }
 })();
+
 
 
 
@@ -531,3 +597,47 @@ window.addEventListener("keydown", e => {
     typedKeys = "";
   }
 });
+
+
+document.getElementById("popupToggle").addEventListener("click", () => {
+  document.querySelector(".right-bar").classList.toggle("open");
+});
+
+
+document.querySelectorAll(".right-bar .nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelector(".right-bar").classList.remove("open");
+  });
+});
+
+
+function moveBottomText() {
+  const bottomText = document.querySelector(".bottom-text");
+  const leftBar = document.querySelector(".left-bar");
+  const mainDetail = document.querySelector(".maindetail");
+
+  const vortexGif = document.querySelector("#VortexLogoIntro img");
+
+  if (!bottomText || !leftBar || !mainDetail) return; // safety check
+
+  if (window.matchMedia("(orientation: portrait)").matches) {
+    // Mobile portrait → move to maindetail
+    if (!mainDetail.contains(bottomText)) {
+      mainDetail.appendChild(bottomText);
+    }
+  } else {
+    // Non-mobile → move back to left-bar
+    if (!leftBar.contains(bottomText)) {
+      leftBar.appendChild(bottomText);
+      const src = vortexGif.src;
+      vortexGif.src = "";
+      vortexGif.src = src;
+    }
+  }
+}
+
+
+
+// Run on load & resize
+window.addEventListener("DOMContentLoaded", moveBottomText);
+window.addEventListener("resize", moveBottomText);

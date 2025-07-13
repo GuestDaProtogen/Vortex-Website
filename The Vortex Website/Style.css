@@ -33,6 +33,13 @@
   font-style: normal;
 }
 
+
+
+
+
+
+
+
 .primary {
   color: #00A8F3;
 }
@@ -60,13 +67,13 @@
 .btn-primary {
   background-color: #005eff;
   border: 0px;
-  font-size: 110%;
+  font-size: clamp(0.5rem, min(1.5vw, 2.5vh), 1.5rem) !important;
   width: 100%;
   color: #fff;
   font-family: BigShoulders;
   letter-spacing: 3px;
 
-  padding: 13px 10px;         
+  padding: 0.4em 0.5em;         
   display: inline-flex;       
   align-items: center;        
   gap: 8px;                  
@@ -76,7 +83,7 @@
 .btn-secondary {
   background-color: #005eff00;
   border: 0px;
-  font-size: 110%;
+  font-size: clamp(0.5rem, min(1.5vw, 2.5vh), 1.5rem) !important;
   width: 100%;
   color: #fff;
   font-family: BigShoulders;
@@ -84,7 +91,7 @@
   border-width: 3px;
   border-style: solid;
   border-color: #005eff;
-  padding: 13px 10px;         
+  padding: 0.4em 0.5em;             
   display: inline-flex;       
   align-items: center;        
   gap: 8px;                  
@@ -120,7 +127,7 @@ html, body {
 .topbar {
   background-color: transparent;
   color: #fff;
-  padding: 10px 20px;
+  padding: 2vh 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -128,7 +135,6 @@ html, body {
 }
 
 .topbar .logo {
-  font-size: 1.5rem;
   font-weight: bold;
 }
 
@@ -153,17 +159,19 @@ html, body {
   flex: 1 1 auto;
   width: 100%;
   box-sizing: border-box;
+  min-width: 0;           /* THIS IS IMPORTANT */
   overflow: hidden;
   min-height: 0;
+  flex-wrap: nowrap;
 }
 
 .left-bar {
   background-color: transparent;
   color: #fff;
-  width: 200px;
+  flex: 0 0 clamp(50px, min(30vw, 30vh), 300px);
+  min-width: 40px;
   padding: 10px;
   box-sizing: border-box;
-  flex-shrink: 0;
   display: flex;          /* <-- add this */
   flex-direction: column;
   height: 100%;           /* keep this */
@@ -172,12 +180,12 @@ html, body {
 
 .left-bar span.f-il {
   display: block;       /* so margin applies vertically */
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2em;
 }
 
 .left-bar span.f-bsl.primary {
   display: block;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2em;
 }
 
 
@@ -185,6 +193,7 @@ html, body {
   background-color: transparent;
   color: #fff;
   padding: 20px;
+  padding-top: 0.4em !important;
   box-sizing: border-box;
   flex: 1 1 auto;
   min-width: 0;
@@ -192,12 +201,14 @@ html, body {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  font-size: clamp(1rem, 2.5vw, 3rem);
 }
 
 .right-bar {
   background-color: transparent;
   color: #fff;
-  width: 200px;
+  flex: 0 0 clamp(50px, min(30vw, 30vh), 300px);
+  min-width: 80px;
   padding: 10px;
   box-sizing: border-box;
   flex-shrink: 0;
@@ -207,9 +218,10 @@ html, body {
 }
 
 .right-bar button.nav-btn {
-  font-size: 1rem;      /* normalize font size */
-  padding: 18px 12px;    /* comfy padding */
-  flex: none;           /* no stretching */
+  font-size: clamp(0.25rem, min(1.5vw, 3.3vh), 1.2rem) !important;
+  padding: 0.9em 12px;    /* comfy padding */
+  flex: 1 1 auto;
+  align-self: stretch;
   width: 100%;          /* full width of right-bar */
   max-width: 100%;      /* keep inside container */
   border-radius: 4px;
@@ -222,9 +234,9 @@ html, body {
   margin: 0%;
 }
 
-.right-bar button.nav-btn i {
-  font-size: 1.2rem;    /* icon size */
-}
+/* .right-bar button.nav-btn i {
+  font-size: 1.2rem;    icon size
+} */
 
 
 .right-bar button.nav-btn {
@@ -247,7 +259,7 @@ html, body {
 
 .time-display {
   font-family: Iceland;
-  font-size: 1.1rem;
+
 }
 
 .time-display .label {
@@ -258,9 +270,33 @@ html, body {
   color: white;
 }
 
+.bt {
+  font-size: clamp(1rem, min(2.5vw, 3.3vh), 3rem) !important;
+}
+
+.mt {
+  font-size: clamp(0.5rem, min(1.5vw, 3.3vh), 1.5rem) !important;
+}
+
+.mst {
+  font-size: clamp(0.25rem, min(1.5vw, 3.3vh), 1.25rem) !important;
+}
+
+.st {
+    font-size: clamp(0.1rem, min(1.5vw, 3.3vh), 1rem) !important;
+}
+
+.left-bar .corner-box,
+.right-bar .corner-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  /* max-width: 150px;  optional cap */
+  flex-shrink: 1;
+}
+
 .corner-box {
   position: relative;
-  width: 100%;
+  /* width: 100%; */
   background: #000000;
   margin: 2rem auto;
   margin-top: 0% !important;
@@ -269,23 +305,28 @@ html, body {
   justify-content: center;
   border: 2px solid rgba(255, 255, 255, 0.149);
   box-sizing: border-box;
+  font-size: clamp(1rem, 2.5vw, 3rem) !important;
+
+  width: clamp(100px, min(100%, 50vw, 50vh), 400px);
+  max-width: 100%;
+  max-height: 100%;
+  flex: none;
+
 }
 
 .inner-box {
   position: relative;
-  width: 80%;
-  height: 80%;
+  /* width: 80%;
+  height: 80%; */
   background: #000000;
   display: block;
   align-items: center;
   justify-content: center;
+  width: 80%;
+  height: auto;
 }
 
-.inner-box img {
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;
-}
+
 
 /* Corner Lines */
 .corner {
@@ -392,7 +433,7 @@ html, body {
 
 
 .nav-btn {
-    font-size: 110%;
+    /* font-size: 110%; */
     width: 100%;
     letter-spacing: 3px;
 
@@ -401,8 +442,6 @@ html, body {
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    margin-bottom: 10px;
-    margin-top: 5px;
 
 
     flex: 1;
@@ -617,9 +656,10 @@ html, body {
 
 
 .status-circle {
+  aspect-ratio: 1/1;
   display: inline-block;
-  width: 1rem;
-  height: 1rem;
+  width: 0.5em;
+  height: 0.5em;
   border-radius: 50%;
   background-color: #00a2ff; 
   animation: blink 800ms infinite alternate;
@@ -658,7 +698,8 @@ html, body {
 
   /* Ensure the card stays vertically centered */
   transform-origin: center center;
-  max-height: 100%;
+  width: 100%;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -666,7 +707,8 @@ html, body {
 
 .card img {
   max-height: 60vh;  /* restrict max height to carousel height */
-  width: auto;
+  width: 100%;
+  height: auto;
   border-radius: 1rem;
   object-fit: contain;
   user-select: none;
@@ -777,7 +819,7 @@ html, body {
 }
 
 .hidden {
-  opacity: 0;
+  filter: brightness(0) saturate(100%) invert(0%) sepia(61%) saturate(6276%) hue-rotate(174deg) brightness(0) contrast(104%);
 }
 
 
@@ -824,6 +866,13 @@ html, body {
 }
 
 
+
+img {
+  width: min(100%, 80vw, 80vh);
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+}
 
 
 
@@ -900,4 +949,207 @@ html, body {
   opacity: 1;
 }
 
+.bottomnav {
+  display: none; /* default hidden */
+}
 
+.maindetail {
+  display: none;
+}
+
+
+/* mobile */
+@media (orientation: portrait), (max-aspect-ratio: 1/1) {
+  .left-bar,
+  .right-bar {
+    display: none !important;
+  }
+
+
+  .page {
+    position: absolute !important;
+    top: 0 !important;           /* ensure it’s aligned top */
+    left: 50% !important;        /* center horizontally via left 50% */
+    transform: translateX(100%) translateX(-50%) !important; /* off-screen right + center offset */
+    width: 96% !important;
+    height: 91% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: transform 0.4s ease !important, opacity 0.4s ease !important;
+    
+  }
+
+  .page.active {
+    opacity: 1 !important;
+    transform: translateX(-50%) !important;  /* centered and visible */
+    pointer-events: auto !important;
+  }
+
+.bt {
+  font-size: clamp(1rem, 4vw, 3rem) !important;
+}
+.mt {
+  font-size: clamp(1rem, 4vw, 2rem) !important;
+}
+
+.mst {
+  font-size: clamp(0.75rem, 3.5vw, 1.75rem) !important;
+}
+
+.st {
+  font-size: clamp(0.65rem, 3vw, 1.25rem) !important;
+}
+
+
+.right-bar button.nav-btn {
+  font-size: clamp(1rem, 4vw, 3rem) !important;
+}
+
+  .right-bar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 92% !important;
+    background: rgba(0, 0, 0, 0.95) !important;
+    z-index: 1000 !important;
+    padding: 1rem !important;
+    overflow-y: auto !important;
+    border: none;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+
+    opacity: 0 !important;
+    transform: translateY(-20px) !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+
+    transition: opacity 0.3s ease !important,
+                transform 0.3s ease !important,
+                visibility 0s linear 0.3s !important;
+  }
+
+  .right-bar.open {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    transition-delay: 0s !important;
+  }
+
+  .nav-btn-left {
+    background-color: #005eff;
+    border: 0px;
+  font-size: clamp(1rem, 4vw, 3rem) !important;
+    width: 50%;
+    color: #fff;
+    font-family: BigShoulders;
+    letter-spacing: 3px;
+
+    padding: 1em 0.5em;         
+    display: inline-flex;       
+    align-items: center;        
+    gap: 8px;                  
+    cursor: pointer;    
+  }
+
+  .maindetail {
+    display: block;
+    font-size: clamp(1rem, 6vw, 5rem) !important;
+  }
+
+  .nav-btn-right {
+    background-color: #005eff00;
+    border: 0px;
+  font-size: clamp(1rem, 4vw, 3rem) !important;
+    width: 50%;
+    color: #fff;
+    font-family: BigShoulders;
+    letter-spacing: 3px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #005eff;
+    padding: 1em 0.5em;             
+    display: inline-flex;       
+    align-items: center;        
+    gap: 8px;                  
+    cursor: pointer;
+  }
+
+  .aboutmecontain {
+    flex-direction: column !important;
+    align-items: center !important;
+    height: 80% !important;
+  }
+
+  .aboutmecontain > div:nth-child(1) {
+    order: 2;
+  }
+
+  .aboutmecontain > div:nth-child(2) {
+    order: 1;
+    justify-content: center !important;  /* <-- FORCE center here */
+  }
+
+    .aboutmecontain > div:nth-child(2) .corner-box {
+    padding: 1rem !important;  /* pushes image down inside the box */
+    box-sizing: border-box !important; /* ensures padding doesn’t break sizing */
+  }
+
+  .aboutmecontain > div:nth-child(2) .corner-box img {
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0.5em auto !important;
+    display: block !important;
+  }
+
+  .aboutmecontain > div {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+
+  .aboutmecontain > div:nth-child(2) .corner-box {
+    width: 90% !important;           /* smaller than 100% to leave side margin */
+    max-width: 400px;                /* optional max width for very wide screens */
+    aspect-ratio: 1 / 1 !important; /* keep square */
+    margin: 0 auto 1rem auto !important; /* center horizontally, add bottom space */
+  }
+
+  /* Image inside container */
+  .aboutmecontain > div:nth-child(2) .corner-box img {
+    width: 100% !important;          /* fill container width */
+    height: auto !important;
+    margin: 0 auto !important;       /* center the image */
+    display: block !important;
+  }
+
+  .bottomnav {
+    z-index: 99999;
+    bottom: 1rem;
+    z-index: 1100;
+    cursor: pointer;
+    display: block !important;  /* <== here’s the magic */
+    transition: background 0.2s ease;
+  }
+
+  .gameplayercount {
+    flex-direction: column !important; 
+  }
+
+  .gameplayercount .corner-box {
+    flex: 1 1 auto !important;         /* allow growing and shrinking */
+    width: 90% !important;            /* leave side margins */
+    max-width: 500px;                 /* optional cap */
+    aspect-ratio: 1/1 !important;     /* keep square */
+  }
+
+  .splash-logo {
+    width: 60% !important;
+  }
+}
