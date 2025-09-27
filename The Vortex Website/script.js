@@ -178,6 +178,8 @@ const photoTitles = [
   "By @pixel_photon on Discord",
   "By @grammar0532 on Discord",
   "By @apollokoline50 on Discord",
+  "By @nonvernon on Discord",
+  "By @Reaper_Draconic on X",
 ];
 
 let current = 0;
