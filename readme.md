@@ -1,7 +1,7 @@
 # VORTEX WEBSITE
 Screenshots:
 <!-- ![Web Preview 1](.\Preview\PreviewHome.png) -->
-![Web Preview 2](.\Preview\PreviewProject.png)
+<img width="1907" height="905" alt="Preview" src="https://github.com/GuestDaProtogen/Vortex-Website/blob/main/Preview/PreviewProject.png?raw=true" />
 
 This is my personal website that contains information about me and shows project that i work on.
 ### Use pure HTML, CSS and JavaScript
